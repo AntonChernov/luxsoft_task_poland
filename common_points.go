@@ -44,22 +44,22 @@ func inArray(val interface{}, array interface{}) (exists bool, index int) {
     return
 }
 
-func checkCommonInArrays(first , second []float32) []float64{
+func checkCommonInArrays(firstArr []float64, secondArr []float64)[]float64{
 	commonarrayArray := make([]float64, 0)
-	for _, it := range first{
-		if exist, index := inArray(it, second); exist{
-			commonarrayArray = append(commonarrayArray, first(index))
+	for _, it := range firstArr{
+		if exist, index := inArray(it, secondArr); exist{
+			commonarrayArray = append(commonarrayArray, firstArr[index])
 		}
 	}
 	return commonarrayArray
 
 }
 
-func sumArray(items []float32) float64{
+func sumArray(items []float64) float64{
 	var sumItems float64
 
-	for _, item := range first{
-		sumItems+=item
+	for _, item := range items{
+		sumItems+=float64(item)
 	}
 	return sumItems
 }
@@ -75,25 +75,41 @@ func changeItemType(arr []string) []float64{
 }
 
 //splitTokenString split string to token pares
-func splitIncomeString(inputString string) []string {
+func splitIncomeString(inputString string)[]string{
 	s := strings.Split(inputString, ",")
+	fmt.Println(s)
+	fmt.Printf("Type: %T\n", s)
 	return s
 }
 
 func main()  {
-	first := flag.String("first", "", "first array ")
-	second := flag.String("second", "", "seccond array")
+	first := flag.String("f", "", "first array ")
+	second := flag.String("s", "", "second array")
 	flag.Parse()
-	prepFirst := splitIncomeString(*first)
-	prepSecond := splitIncomeString(*second)
-	first = changeItemType(prepFirst)
-	second = changeItemType(prepSecond)
-	resArray := checkCommonInArrays(first, seccond) 
-	sumFirst := sumArray(first)
-	sumSecond:= sumArray(first)
-	checkCommonFirst := checkCommonAfterSumInArray(sumFirst, second)
-	checkCommonSecond := checkCommonAfterSumInArray(sumSecond, first)
+	fmt.Println(*first)
+	fmt.Printf("Type of first: %T \n", *first)
+	fmt.Println(*second)
+	_f := splitIncomeString(*first)
+	fmt.Println(_f)
+	_s := splitIncomeString(*second)
+	fmt.Println(_s)
+	// prepFirst := splitIncomeString("asd,qwe")
+	// prepSecond := splitIncomeString(*second)
+	// fmt.Printf("%T", *prepFirst)
+	// fmt.Printf("%T", *prepSecond)
+	_first := changeItemType(_f)
+	fmt.Println(_first)
+	fmt.Printf("Typr %T \n", _first)
+	_second := changeItemType(_s)
+	fmt.Println(_second)
+	fmt.Printf("Typr %T \n", _second)
+	resArray := checkCommonInArrays(_first, _second) 
+	sumFirst := sumArray(_first)
+	sumSecond:= sumArray(_second)
+	checkCommonFirst := checkCommonAfterSumInArray(sumFirst, _second)
+	checkCommonSecond := checkCommonAfterSumInArray(sumSecond, _first)
+	fmt.Println("Typr: ", checkCommonFirst)
 	resArray = append(resArray, checkCommonFirst...)
 	resArray = append(resArray, checkCommonSecond...)
-	fmt.Println("Common Points:", resArray)
+	fmt.Printf("Common Points: %v\n", resArray)
 }
